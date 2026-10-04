@@ -1,0 +1,21 @@
+{
+  "name": "api-client-colorme",
+  "version": "0.0.0",
+  "description": "Unofficial client for the カラーミーショップ API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ihori-system/api-client-colorme.git"
+  },
+  "keywords": [],
+  "author": "Ihori System, LLC",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ihori-system/api-client-colorme/issues"
+  },
+  "homepage": "https://github.com/ihori-system/api-client-colorme#readme"
+}
