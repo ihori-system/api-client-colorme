@@ -112,6 +112,12 @@ test('getAccessToken', async () => {
 
   const json = await response.body.json()
   expect(json.access_token).toBe('d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX')
+
+  client.setAccessToken({
+    accessToken: json.access_token,
+    tokenType: json.token_type,
+    scope: json.scope,
+  })
 })
 
 test('getShopV1', async () => {
