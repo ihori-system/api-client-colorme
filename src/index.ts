@@ -1,16 +1,13 @@
 import { Client, type Dispatcher } from 'undici'
 
-import type { paths as pathsAppStoreApi } from './generated/openapi/appstore'
-import type { paths as pathsShopApi } from './generated/openapi/shop'
+import type { paths as pathsAppStoreApi } from './generated/openapi/appstore.ts'
+import type { paths as pathsShopApi } from './generated/openapi/shop.ts'
 import type {
-  // AppStore API
-  APPSTORE_API_PATH,
-  APPSTORE_API_METHOD,
-
-  // Shop API
-  SHOP_API_PATH,
-  SHOP_API_METHOD,
-} from './types'
+  AppStoreApiPath,
+  AppStoreApiMethod,
+  ShopApiPath,
+  ShopApiMethod,
+} from './types.ts'
 
 const BASE_URL = 'https://api.shop-pro.jp'
 
@@ -25,7 +22,7 @@ export class ColormeApiClient {
     this.client = client
   }
 
-  private getAuthorizationHeader({ accessToken }: { accessToken?: string }) {
+  private getAuthorizationHeader({ accessToken }: { accessToken?: string | undefined }) {
     return { Authorization: `Bearer ${accessToken ?? this.accessToken ?? ''}` }
   }
 
@@ -44,23 +41,9 @@ export class ColormeApiClient {
    * @link https://app.shop-pro.jp/open_api#tag/script/operation/getShopScriptTags
    */
   getShopScriptTagsV1() {
-    const path: APPSTORE_API_PATH = '/appstore/v1/script_tags.json'
-    const method: APPSTORE_API_METHOD<typeof path> = 'GET'
+    const path: AppStoreApiPath = '/appstore/v1/script_tags.json'
+    const method: AppStoreApiMethod<typeof path> = 'GET'
     type Response200Json = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['responses']['200']['schema']
-    type ResponseSuccess = Omit<Dispatcher.ResponseData, 'body' | 'statusCode'>
-      & {
-        statusCode: 200
-        body: Omit<Dispatcher.ResponseData['body'], 'json'>
-      }
-      & {
-        body: {
-          json: () => Promise<Response200Json>
-        }
-      }
-
-    const isSuccess = (response: Dispatcher.ResponseData): response is ResponseSuccess => {
-      return response.statusCode === 200
-    }
 
     return async ({ accessToken }: { accessToken?: string }) => {
       const response = await this.client.request({
@@ -71,10 +54,20 @@ export class ColormeApiClient {
         },
       })
 
-      return {
-        response,
-        isSuccess,
-      }
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
     }
   }
 
@@ -83,27 +76,13 @@ export class ColormeApiClient {
    * @link https://app.shop-pro.jp/open_api#tag/script/operation/createShopScriptTag
    */
   createShopScriptTagV1() {
-    const path: APPSTORE_API_PATH = '/appstore/v1/script_tags.json'
-    const method: APPSTORE_API_METHOD<typeof path> = 'POST'
+    const path: AppStoreApiPath = '/appstore/v1/script_tags.json'
+    const method: AppStoreApiMethod<typeof path> = 'POST'
     // `script_tag/script_tag` がなぜかネストされている。恐らく誤りであるため、ここで取り出して解消する。
     type Body = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['parameters']['body']['script_tag']
     type Response200Json = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['responses']['200']['schema']
-    type ResponseSuccess = Omit<Dispatcher.ResponseData, 'body' | 'statusCode'>
-      & {
-        statusCode: 200
-        body: Omit<Dispatcher.ResponseData['body'], 'json'>
-      }
-      & {
-        body: {
-          json: () => Promise<Response200Json>
-        }
-      }
 
-    const isSuccess = (response: Dispatcher.ResponseData): response is ResponseSuccess => {
-      return response.statusCode === 200
-    }
-
-    interface Parameters {
+    type Parameters = {
       body: Body
     }
     return async ({ accessToken, params: { body } }: { accessToken?: string, params: Parameters }) => {
@@ -113,13 +92,23 @@ export class ColormeApiClient {
         headers: {
           ...this.getAuthorizationHeader({ accessToken }),
         },
-        body,
+        body: JSON.stringify(body),
       })
 
-      return {
-        response,
-        isSuccess,
-      }
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
     }
   }
 
@@ -128,26 +117,11 @@ export class ColormeApiClient {
    * @link https://app.shop-pro.jp/open_api#tag/script/operation/deleteScriptTag
    */
   deleteScriptTagV1() {
-    const path: APPSTORE_API_PATH = '/appstore/v1/script_tags/{scriptTagId}.json'
-    const method: APPSTORE_API_METHOD<typeof path> = 'DELETE'
+    const path: AppStoreApiPath = '/appstore/v1/script_tags/{scriptTagId}.json'
+    const method: AppStoreApiMethod<typeof path> = 'DELETE'
     type Path = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['parameters']['path']
-    type ResponseSuccess = Omit<Dispatcher.ResponseData, 'body' | 'statusCode'>
-      & {
-        statusCode: 204
-        body: Omit<Dispatcher.ResponseData['body'], 'json'>
-      }
-      & {
-        body: {
-          // No Content
-          json: never
-        }
-      }
 
-    const isSuccess = (response: Dispatcher.ResponseData): response is ResponseSuccess => {
-      return response.statusCode === 204
-    }
-
-    interface Parameters {
+    type Parameters = {
       path: Path
     }
     return async ({ accessToken, params }: { accessToken?: string, params: Parameters }) => {
@@ -159,10 +133,20 @@ export class ColormeApiClient {
         },
       })
 
-      return {
-        response,
-        isSuccess,
-      }
+      return response.statusCode === 204
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => Promise.resolve(),
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
     }
   }
 
@@ -171,23 +155,10 @@ export class ColormeApiClient {
    * @link https://developer.shop-pro.jp/docs/colorme-api#section/API/利用手順
    */
   getAccessToken() {
-    type ResponseSuccess = Omit<Dispatcher.ResponseData, 'body' | 'statusCode'>
-      & {
-        statusCode: 200
-        body: Omit<Dispatcher.ResponseData['body'], 'json'>
-      }
-      & {
-        body: {
-          json: () => Promise<{
-            access_token: string
-            token_type: string
-            scope: string
-          }>
-        }
-      }
-
-    const isSuccess = (response: Dispatcher.ResponseData): response is ResponseSuccess => {
-      return response.statusCode === 200
+    type Response200Json = {
+      access_token: string
+      token_type: string
+      scope: string
     }
 
     return async (params: {
@@ -208,10 +179,20 @@ export class ColormeApiClient {
         method: 'POST',
       })
 
-      return {
-        response,
-        isSuccess,
-      }
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
     }
   }
 
@@ -220,23 +201,9 @@ export class ColormeApiClient {
    * @link https://developer.shop-pro.jp/docs/colorme-api#tag/shop/operation/getShop
    */
   getShopV1() {
-    const path: SHOP_API_PATH = '/v1/shop'
-    const method: SHOP_API_METHOD<typeof path> = 'GET'
+    const path: ShopApiPath = '/v1/shop'
+    const method: ShopApiMethod<typeof path> = 'GET'
     type Response200Json = pathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
-    type ResponseSuccess = Omit<Dispatcher.ResponseData, 'body' | 'statusCode'>
-      & {
-        statusCode: 200
-        body: Omit<Dispatcher.ResponseData['body'], 'json'>
-      }
-      & {
-        body: {
-          json: () => Promise<Response200Json>
-        }
-      }
-
-    const isSuccess = (response: Dispatcher.ResponseData): response is ResponseSuccess => {
-      return response.statusCode === 200
-    }
 
     return async ({ accessToken }: { accessToken?: string }) => {
       const response = await this.client.request({
@@ -247,10 +214,20 @@ export class ColormeApiClient {
         },
       })
 
-      return {
-        response,
-        isSuccess,
-      }
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
     }
   }
 }
