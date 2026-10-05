@@ -28,6 +28,10 @@ jobs:
 
       - run: npm ci
 
+      - run: npm run generate:shop
+
+      - run: npm run generate:appstore
+
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -30,6 +30,10 @@ jobs:
 
       - run: npm ci
 
+      - run: npm run generate:shop
+
+      - run: npm run generate:appstore
+
       - run: npm run lint
 
       - run: npm run test
