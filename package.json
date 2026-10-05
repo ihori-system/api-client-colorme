@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "description": "Unofficial client for the カラーミーショップ API",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "generate:shop": "openapi-typescript https://api.shop-pro.jp/v1/spec/open_api.json -o ./src/generated/openapi/shop.ts",
     "generate:appstore": "npx openapi-typescript@5.4.1 https://api.shop-pro.jp/appstore/v1/open_api.json -o ./src/generated/openapi/appstore.ts",
     "lint": "eslint",
-    "test": "vitest run",
+    "test": "vitest run --coverage",
     "postinstall": "npm run generate:shop && npm run generate:appstore"
   },
   "repository": {
@@ -17,7 +18,6 @@
   "keywords": [],
   "author": "Ihori System, LLC",
   "license": "MIT",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/ihori-system/api-client-colorme/issues"
   },
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
+    "@vitest/coverage-v8": "^5.0.3",
     "eslint": "^10.12.0",
     "globals": "^17.13.0",
     "openapi-typescript": "^7.13.0",
