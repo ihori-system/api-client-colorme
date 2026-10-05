@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "generate:shop": "openapi-typescript https://api.shop-pro.jp/v1/spec/open_api.json -o ./src/generated/openapi/shop.ts",
+    "generate:appstore": "npx openapi-typescript@5.4.1 https://api.shop-pro.jp/appstore/v1/open_api.json -o ./src/generated/openapi/appstore.ts",
     "lint": "eslint",
     "test": "vitest run",
-    "postinstall": "npm run generate:shop"
+    "postinstall": "npm run generate:shop && npm run generate:appstore"
   },
   "repository": {
     "type": "git",
