@@ -17,8 +17,26 @@ const BASE_URL = 'https://api.shop-pro.jp'
 export class ColormeApiClient {
   client: Dispatcher
 
+  accessToken: string | null = null
+  tokenType: string | null = null
+  scope: string | null = null
+
   constructor(client: Dispatcher = new Client(BASE_URL)) {
     this.client = client
+  }
+
+  private getAuthorizationHeader() {
+    return { Authorization: `Bearer ${this.accessToken ?? ''}` }
+  }
+
+  setAccessToken({ accessToken, tokenType, scope }: {
+    accessToken: string
+    tokenType: string
+    scope: string
+  }) {
+    this.accessToken = accessToken
+    this.tokenType = tokenType
+    this.scope = scope
   }
 
   /**
@@ -48,6 +66,9 @@ export class ColormeApiClient {
       const response = await this.client.request({
         path,
         method,
+        headers: {
+          ...this.getAuthorizationHeader(),
+        },
       })
 
       return {
@@ -89,6 +110,9 @@ export class ColormeApiClient {
       const response = await this.client.request({
         path,
         method,
+        headers: {
+          ...this.getAuthorizationHeader(),
+        },
         body,
       })
 
@@ -130,6 +154,9 @@ export class ColormeApiClient {
       const response = await this.client.request({
         path: path.replace('{scriptTagId}', String(params.path.scriptTagId)),
         method,
+        headers: {
+          ...this.getAuthorizationHeader(),
+        },
       })
 
       return {
@@ -215,6 +242,9 @@ export class ColormeApiClient {
       const response = await this.client.request({
         path,
         method,
+        headers: {
+          ...this.getAuthorizationHeader(),
+        },
       })
 
       return {
