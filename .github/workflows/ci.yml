@@ -22,3 +22,12 @@ jobs:
 
       # https://github.com/streetsidesoftware/cspell-action
       - uses: streetsidesoftware/cspell-action@v8
+
+      # https://github.com/actions/setup-node
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: 'package.json'
+
+      - run: npm ci
+
+      - run: npm run lint
