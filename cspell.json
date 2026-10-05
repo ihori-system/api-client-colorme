@@ -1,5 +1,26 @@
 {
   "words": [
-    "colorme"
+    "appstore",
+    "cmsp",
+    "colorme",
+    "dbaeumer",
+    "dotenv",
+    "eslintcache",
+    "hojin",
+    "ihori",
+    "jscoverage",
+    "jspm",
+    "nuxt",
+    "pids",
+    "stylelintcache",
+    "sveltekit",
+    "testshop",
+    "vite",
+    "vitepress",
+    "vuepress",
+    "wscript",
+  ],
+  "ignoreWords": [
+    "paxxxxxxxx",
   ]
 }
