@@ -1,6 +1,22 @@
 {
   "words": [
     "colorme",
+    "dbaeumer",
+    "dotenv",
+    "eslintcache",
     "ihori",
+    "jscoverage",
+    "jspm",
+    "nuxt",
+    "pids",
+    "stylelintcache",
+    "sveltekit",
+    "vite",
+    "vitepress",
+    "vuepress",
+    "wscript",
+  ],
+  "ignoreWords": [
+    "paxxxxxxxx",
   ]
 }
