@@ -1,6 +1,6 @@
 {
   "name": "@ihori-system/api-client-colorme",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Unofficial client for the カラーミーショップ API",
   "main": "index.js",
   "type": "module",
