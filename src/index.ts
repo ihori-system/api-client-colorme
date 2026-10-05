@@ -25,18 +25,18 @@ export class ColormeApiClient {
     this.client = client
   }
 
-  private getAuthorizationHeader() {
-    return { Authorization: `Bearer ${this.accessToken ?? ''}` }
+  private getAuthorizationHeader({ accessToken }: { accessToken?: string }) {
+    return { Authorization: `Bearer ${accessToken ?? this.accessToken ?? ''}` }
   }
 
   setAccessToken({ accessToken, tokenType, scope }: {
-    accessToken: string
-    tokenType: string
-    scope: string
+    accessToken?: string
+    tokenType?: string
+    scope?: string
   }) {
-    this.accessToken = accessToken
-    this.tokenType = tokenType
-    this.scope = scope
+    this.accessToken = accessToken ?? null
+    this.tokenType = tokenType ?? null
+    this.scope = scope ?? null
   }
 
   /**
@@ -62,12 +62,12 @@ export class ColormeApiClient {
       return response.statusCode === 200
     }
 
-    return async () => {
+    return async ({ accessToken }: { accessToken?: string }) => {
       const response = await this.client.request({
         path,
         method,
         headers: {
-          ...this.getAuthorizationHeader(),
+          ...this.getAuthorizationHeader({ accessToken }),
         },
       })
 
@@ -106,12 +106,12 @@ export class ColormeApiClient {
     interface Parameters {
       body: Body
     }
-    return async ({ params: { body } }: { params: Parameters }) => {
+    return async ({ accessToken, params: { body } }: { accessToken?: string, params: Parameters }) => {
       const response = await this.client.request({
         path,
         method,
         headers: {
-          ...this.getAuthorizationHeader(),
+          ...this.getAuthorizationHeader({ accessToken }),
         },
         body,
       })
@@ -150,12 +150,12 @@ export class ColormeApiClient {
     interface Parameters {
       path: Path
     }
-    return async ({ params }: { params: Parameters }) => {
+    return async ({ accessToken, params }: { accessToken?: string, params: Parameters }) => {
       const response = await this.client.request({
         path: path.replace('{scriptTagId}', String(params.path.scriptTagId)),
         method,
         headers: {
-          ...this.getAuthorizationHeader(),
+          ...this.getAuthorizationHeader({ accessToken }),
         },
       })
 
@@ -238,12 +238,12 @@ export class ColormeApiClient {
       return response.statusCode === 200
     }
 
-    return async () => {
+    return async ({ accessToken }: { accessToken?: string }) => {
       const response = await this.client.request({
         path,
         method,
         headers: {
-          ...this.getAuthorizationHeader(),
+          ...this.getAuthorizationHeader({ accessToken }),
         },
       })
 

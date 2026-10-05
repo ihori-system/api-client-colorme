@@ -28,7 +28,7 @@ test('getShopScriptTagsV1', async () => {
 
   const client = new ColormeApiClient(mockClient)
 
-  const { response, isSuccess } = await client.getShopScriptTagsV1()()
+  const { response, isSuccess } = await client.getShopScriptTagsV1()({})
   assert(isSuccess(response))
 
   const json = await response.body.json()
@@ -113,6 +113,8 @@ test('getAccessToken', async () => {
   const json = await response.body.json()
   expect(json.access_token).toBe('d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX')
 
+  client.setAccessToken({})
+
   client.setAccessToken({
     accessToken: json.access_token,
     tokenType: json.token_type,
@@ -170,7 +172,7 @@ test('getShopV1', async () => {
 
   const client = new ColormeApiClient(mockClient)
 
-  const { response, isSuccess } = await client.getShopV1()()
+  const { response, isSuccess } = await client.getShopV1()({})
   assert(isSuccess(response))
 
   const json = await response.body.json()
