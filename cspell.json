@@ -1,9 +1,12 @@
 {
   "words": [
+    "appstore",
+    "cmsp",
     "colorme",
     "dbaeumer",
     "dotenv",
     "eslintcache",
+    "hojin",
     "ihori",
     "jscoverage",
     "jspm",
@@ -11,6 +14,7 @@
     "pids",
     "stylelintcache",
     "sveltekit",
+    "testshop",
     "vite",
     "vitepress",
     "vuepress",
