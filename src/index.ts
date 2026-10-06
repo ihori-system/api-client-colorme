@@ -9,7 +9,7 @@ import type {
   ShopApiMethod,
 } from './types.ts'
 
-const BASE_URL = 'https://api.shop-pro.jp'
+export const BASE_URL = 'https://api.shop-pro.jp'
 
 export class ColormeApiClient {
   client: Dispatcher
