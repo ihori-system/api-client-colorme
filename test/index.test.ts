@@ -155,10 +155,15 @@ describe('getAccessToken', () => {
 
     const { response } = await client.getAccessToken()(
       {
-        clientId: 'CLIENT_ID',
-        clientSecret: 'CLIENT_SECRET',
-        code: 'CODE',
-        redirectUri: 'REDIRECT_URI',
+        params: {
+          body: {
+            client_id: 'CLIENT_ID',
+            client_secret: 'CLIENT_SECRET',
+            code: 'CODE',
+            grant_type: 'authorization_code',
+            redirect_uri: 'REDIRECT_URI',
+          },
+        },
       },
     )
     assert(response.ok)
@@ -185,10 +190,15 @@ describe('getAccessToken', () => {
 
     const { response } = await client.getAccessToken()(
       {
-        clientId: 'CLIENT_ID',
-        clientSecret: 'CLIENT_SECRET',
-        code: 'CODE',
-        redirectUri: 'REDIRECT_URI',
+        params: {
+          body: {
+            client_id: 'CLIENT_ID',
+            client_secret: 'CLIENT_SECRET',
+            code: 'CODE',
+            grant_type: 'authorization_code',
+            redirect_uri: 'REDIRECT_URI',
+          },
+        },
       },
     )
     assert(response.ok === false)

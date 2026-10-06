@@ -1,3 +1,5 @@
+import querystring from 'node:querystring'
+
 import { Client, type Dispatcher } from 'undici'
 
 import type { paths as pathsAppStoreApi } from './generated/openapi/appstore.ts'
@@ -161,23 +163,20 @@ export class ColormeApiClient {
       scope: string
     }
 
-    return async (params: {
-      clientId: string
-      clientSecret: string
-      code: string
-      redirectUri: string
-    }) => {
-      const body = new FormData()
-      body.append('client_id', params.clientId)
-      body.append('client_secret', params.clientSecret)
-      body.append('code', params.code)
-      body.append('grant_type', 'authorization_code')
-      body.append('redirect_uri', params.redirectUri)
-
+    type Parameters = {
+      body: {
+        client_id: string
+        client_secret: string
+        code: string
+        grant_type: 'authorization_code'
+        redirect_uri: string
+      }
+    }
+    return async ({ params: { body } }: { params: Parameters }) => {
       const response = await this.client.request({
         path: '/oauth/token',
         method: 'POST',
-        body,
+        body: querystring.stringify(body),
       })
 
       return response.statusCode === 200
