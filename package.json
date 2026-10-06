@@ -2,7 +2,7 @@
   "name": "@ihori-system/api-client-colorme",
   "version": "0.0.4",
   "description": "Unofficial client for the カラーミーショップ API",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "generate:shop": "openapi-typescript https://api.shop-pro.jp/v1/spec/open_api.json -o ./src/generated/openapi/shop.ts",
