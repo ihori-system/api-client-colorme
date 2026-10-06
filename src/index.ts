@@ -177,6 +177,7 @@ export class ColormeApiClient {
       const response = await this.client.request({
         path: '/oauth/token',
         method: 'POST',
+        body,
       })
 
       return response.statusCode === 200
