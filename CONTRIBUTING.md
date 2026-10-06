@@ -14,7 +14,11 @@ npm ci
 
 ## Deployment
 
-#### 1) Create new tag
+#### 1) Merge develop into main
+
+https://github.com/ihori-system/api-client-colorme/compare/main...develop
+
+#### 2) Create new tag
 
 ```sh
 git checkout main
@@ -26,7 +30,7 @@ git checkout develop
 git merge origin/main
 git push
 ```
-#### 2) Create new release
+#### 3) Create new release
 
 https://github.com/ihori-system/api-client-colorme/releases/new
 
