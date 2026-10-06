@@ -93,6 +93,7 @@ export class ColormeApiClient {
         method,
         headers: {
           ...this.getAuthorizationHeader({ accessToken }),
+          'Content-Type': 'application/json; charset=utf-8',
         },
         body: JSON.stringify(body),
       })
