@@ -1,5 +1,11 @@
+import {
+  assert,
+  describe,
+  expect,
+  test,
+} from 'vitest'
+
 import { MockAgent } from 'undici'
-import { assert, describe, expect, test } from 'vitest'
 
 import {
   ColormeApiClient,
