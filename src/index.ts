@@ -2,8 +2,8 @@ import querystring from 'node:querystring'
 
 import { Client, type Dispatcher } from 'undici'
 
-import type { paths as pathsAppStoreApi } from './generated/openapi/appstore.ts'
-import type { paths as pathsShopApi } from './generated/openapi/shop.ts'
+import type { paths as PathsAppStoreApi } from './generated/openapi/appstore.ts'
+import type { paths as PathsShopApi } from './generated/openapi/shop.ts'
 import type {
   AppStoreApiPath,
   AppStoreApiMethod,
@@ -39,13 +39,17 @@ export class ColormeApiClient {
   }
 
   /**
+   * カラーミーショップアプリストア API
+   */
+
+  /**
    * スクリプトタグの取得
    * @link https://app.shop-pro.jp/open_api#tag/script/operation/getShopScriptTags
    */
   getShopScriptTagsV1() {
     const path: AppStoreApiPath = '/appstore/v1/script_tags.json'
     const method: AppStoreApiMethod<typeof path> = 'GET'
-    type Response200Json = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['responses']['200']['schema']
+    type Response200Json = PathsAppStoreApi[typeof path][Lowercase<typeof method>]['responses']['200']['schema']
 
     return async ({ accessToken }: { accessToken?: string }) => {
       const response = await this.client.request({
@@ -81,8 +85,8 @@ export class ColormeApiClient {
     const path: AppStoreApiPath = '/appstore/v1/script_tags.json'
     const method: AppStoreApiMethod<typeof path> = 'POST'
     // `script_tag/script_tag` がなぜかネストされている。恐らく誤りであるため、ここで取り出して解消する。
-    type Body = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['parameters']['body']['script_tag']
-    type Response200Json = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['responses']['200']['schema']
+    type Body = PathsAppStoreApi[typeof path][Lowercase<typeof method>]['parameters']['body']['script_tag']
+    type Response200Json = PathsAppStoreApi[typeof path][Lowercase<typeof method>]['responses']['200']['schema']
 
     type Parameters = {
       body: Body
@@ -122,7 +126,7 @@ export class ColormeApiClient {
   deleteScriptTagV1() {
     const path: AppStoreApiPath = '/appstore/v1/script_tags/{scriptTagId}.json'
     const method: AppStoreApiMethod<typeof path> = 'DELETE'
-    type Path = pathsAppStoreApi[typeof path][Lowercase<typeof method>]['parameters']['path']
+    type Path = PathsAppStoreApi[typeof path][Lowercase<typeof method>]['parameters']['path']
 
     type Parameters = {
       path: Path
@@ -152,6 +156,10 @@ export class ColormeApiClient {
           }
     }
   }
+
+  /**
+   * カラーミーショップ API
+   */
 
   /**
    * 認可コードをアクセストークンに交換
@@ -204,7 +212,42 @@ export class ColormeApiClient {
   getShopV1() {
     const path: ShopApiPath = '/v1/shop'
     const method: ShopApiMethod<typeof path> = 'GET'
-    type Response200Json = pathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
+    type Response200Json = PathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
+
+    return async ({ accessToken }: { accessToken?: string }) => {
+      const response = await this.client.request({
+        path,
+        method,
+        headers: {
+          ...this.getAuthorizationHeader({ accessToken }),
+        },
+      })
+
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
+    }
+  }
+
+  /**
+   * 商品一覧の取得
+   * @link https://developer.shop-pro.jp/docs/colorme-api#tag/product/operation/getProducts
+   */
+  getProductsV1() {
+    const path: ShopApiPath = '/v1/products'
+    const method: ShopApiMethod<typeof path> = 'GET'
+    type Response200Json = PathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
 
     return async ({ accessToken }: { accessToken?: string }) => {
       const response = await this.client.request({
