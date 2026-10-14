@@ -6,12 +6,14 @@
     "dbaeumer",
     "dotenv",
     "eslintcache",
+    "expl",
     "hojin",
     "ihori",
     "jscoverage",
     "jspm",
     "nuxt",
     "pids",
+    "soldout",
     "stylelintcache",
     "sveltekit",
     "testshop",
@@ -21,6 +23,7 @@
     "wscript",
   ],
   "ignoreWords": [
+    "conent",
     "paxxxxxxxx",
   ]
 }
