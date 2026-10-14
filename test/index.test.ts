@@ -285,6 +285,470 @@ describe('getShopV1', () => {
   })
 })
 
+describe('getSalesV1', () => {
+  test('ok', async () => {
+    const mockAgent = new MockAgent({ connections: 1 })
+    const mockClient = mockAgent.get(BASE_URL)
+
+    mockClient.intercept({ path: '/v1/sales', method: 'GET' }).reply(200,
+      {
+        sales: [
+          {
+            id: 4434233,
+            account_id: 'PAXXXXXXXX',
+            make_date: 1465784934,
+            update_date: 1494496895,
+            payment_id: 751,
+            mobile: false,
+            paid: true,
+            delivered: true,
+            canceled: false,
+            accepted_mail_state: 'not_yet',
+            paid_mail_state: 'not_yet',
+            delivered_mail_state: 'not_yet',
+            accepted_mail_sent_date: 1363152822,
+            paid_mail_sent_date: 1363153288,
+            delivered_mail_sent_date: 1363154591,
+            point_state: 'assumed',
+            gmo_point_state: 'assumed',
+            yahoo_point_state: 'assumed',
+            product_total_price: 1000,
+            delivery_total_charge: 350,
+            fee: 300,
+            tax: 80,
+            noshi_total_charge: 0,
+            card_total_charge: 200,
+            wrapping_total_charge: 0,
+            point_discount: 0,
+            gmo_point_discount: 0,
+            other_discount: 0,
+            other_discount_name: '',
+            total_price: 1930,
+            granted_points: 100,
+            use_points: 0,
+            granted_gmo_points: 0,
+            use_gmo_points: 0,
+            granted_yahoo_points: 0,
+            use_yahoo_points: 0,
+            external_order_id: 'ABC0123456789',
+            customer: {
+              id: 998273,
+              account_id: 'PA01234567',
+              name: 'カラーミー太郎',
+              furigana: 'カラーミータロウ',
+              hojin: 'GMOペパボ株式会社',
+              busho: 'EC事業部',
+              sex: 'male',
+              birthday: '1999-01-01',
+              postal: '1578512',
+              pref_id: 13,
+              pref_name: '東京都',
+              address1: '渋谷区桜丘町26-1',
+              address2: 'セルリアンタワー',
+              mail: 'example@pepabo.com',
+              tel: null,
+              fax: null,
+              tel_mobile: '080-1234-1234',
+              other: null,
+              points: 216,
+              member: true,
+              sales_count: 3,
+              receive_mail_magazine: true,
+              answer_free_form1: 'これはフリー項目1の入力内容です',
+              answer_free_form2: 'これはフリー項目2の入力内容です',
+              answer_free_form3: 'これはフリー項目3の入力内容です',
+              make_date: 1465784944,
+              update_date: 1494496809,
+              membership: {
+                membership_id: 'gold_member',
+                name: 'ゴールド会員',
+                progress: {
+                  score: 3000,
+                  aggregation_period: {
+                    start_date: 1780239600,
+                    end_date: 1782831599,
+                  },
+                  next_membership: {
+                    membership_id: 'platinum',
+                    name: 'プラチナ会員',
+                    required_score: 4000,
+                    remaining_score: 1000,
+                  },
+                },
+              },
+              external_accounts: [
+                {
+                  provider: 0,
+                  uid: '6cfd46d2fd18eb15d01ce0a00d4b0349',
+                  created_at: 1465784934,
+                },
+              ],
+            },
+            details: [
+              {
+                id: 44344599,
+                sale_id: 4434233,
+                account_id: 'PA01234567',
+                product_id: 1342332,
+                sale_delivery_id: 1173289,
+                option1_value: '赤',
+                option2_value: 'Sサイズ',
+                option1_index: 0,
+                option2_index: 0,
+                product_model_number: 'T-RED-S-223',
+                product_name: 'Tシャツ',
+                pristine_product_full_name: 'Tシャツ（カラー：赤、サイズ：Sサイズ）',
+                product_cost: 1000,
+                product_image_url: 'https://img07.shop-pro.jp/XXX/XX/product/123.jpg?20130319164314',
+                product_thumbnail_image_url: 'https://img07.shop-pro.jp/XXX/XX/product/123_th.jpg?20130319164314',
+                product_mobile_image_url: 'https://img07.shop-pro.jp/XXX/XX/product/123_mb.jpg?20130319164314',
+                price: 1680,
+                price_with_tax: 1814,
+                product_num: 1,
+                unit: '枚',
+                subtotal_price: 1814,
+                tax_reduced: false,
+                customizations: [
+                  {
+                    title: '名入れ',
+                    value: 'オリジナル名',
+                  },
+                ],
+              },
+            ],
+            sale_deliveries: [
+              {
+                id: 1173289,
+                account_id: 'PA01234567',
+                sale_id: 4434233,
+                delivery_id: 113922,
+                detail_ids: [
+                  44344599,
+                ],
+                name: 'ペパボ太郎',
+                furigana: 'ペパボタロウ',
+                postal: '1508512',
+                pref_id: 13,
+                pref_name: '東京都',
+                address1: '渋谷区桜丘町26-1',
+                address2: 'セルリアンタワー',
+                tel: null,
+                preferred_date: '2017-05-21',
+                preferred_period: '午前中',
+                slip_number: '1234-5678-9012',
+                noshi_text: '寿',
+                noshi_charge: 100,
+                card_name: 'バースデーカード',
+                card_text: 'おめでとう',
+                card_charge: 150,
+                wrapping_name: 'ギフト用ラッピング（ピンク）',
+                wrapping_charge: 200,
+                delivery_charge: 350,
+                total_charge: 800,
+                tracking_url: 'https://example.com/delivery_state?id=111-222-33333',
+                memo: null,
+                delivered: false,
+              },
+            ],
+            segment: {
+              id: 1,
+              name: 'string',
+              parent_sale_id: 4434233,
+              splitted: true,
+              product_total_price: 2000,
+              delivery_total_charge: 700,
+              total_price: 2700,
+              noshi_total_charge: 0,
+              card_total_charge: 200,
+              wrapping_total_charge: 0,
+            },
+            totals: {
+              normal_tax_amount: 90,
+              reduced_tax_amount: 13,
+              discount_amount_for_normal_tax: 171,
+              discount_amount_for_reduced_tax: 29,
+              total_price_with_normal_tax: 989,
+              total_price_with_reduced_tax: 171,
+            },
+            application: {
+              name: 'サンプルアプリ',
+            },
+            shop_coupon: {
+              id: 123,
+              name: '新規会員限定クーポン',
+              code: 'WELCOME10',
+            },
+          },
+        ],
+        meta: {
+          total: 300,
+          limit: 50,
+          offset: 200,
+        },
+      },
+    )
+
+    const client = new ColormeApiClient(mockClient)
+
+    const { response } = await client.getSalesV1()({})
+    assert(response.ok)
+
+    const json = await response.json()
+    assert(json.meta !== undefined)
+    assert(json.sales !== undefined)
+    expect(json.meta.total).toBe(300)
+    expect(json.sales[0].id).toBe(4434233)
+  })
+
+  test('not ok', async () => {
+    const mockAgent = new MockAgent({ connections: 1 })
+    const mockClient = mockAgent.get(BASE_URL)
+
+    mockClient.intercept({ path: '/v1/sales', method: 'GET' }).reply(500)
+
+    const client = new ColormeApiClient(mockClient)
+
+    const { response } = await client.getSalesV1()({})
+    assert(response.ok === false)
+  })
+})
+
+describe('getSaleV1', () => {
+  test('ok', async () => {
+    const mockAgent = new MockAgent({ connections: 1 })
+    const mockClient = mockAgent.get(BASE_URL)
+
+    mockClient.intercept({ path: '/v1/sales/4434233', method: 'GET' }).reply(200,
+      {
+        sale: {
+          id: 4434233,
+          account_id: 'PAXXXXXXXX',
+          make_date: 1465784934,
+          update_date: 1494496895,
+          payment_id: 751,
+          mobile: false,
+          paid: true,
+          delivered: true,
+          canceled: false,
+          accepted_mail_state: 'not_yet',
+          paid_mail_state: 'not_yet',
+          delivered_mail_state: 'not_yet',
+          accepted_mail_sent_date: 1363152822,
+          paid_mail_sent_date: 1363153288,
+          delivered_mail_sent_date: 1363154591,
+          point_state: 'assumed',
+          gmo_point_state: 'assumed',
+          yahoo_point_state: 'assumed',
+          product_total_price: 1000,
+          delivery_total_charge: 350,
+          fee: 300,
+          tax: 80,
+          noshi_total_charge: 0,
+          card_total_charge: 200,
+          wrapping_total_charge: 0,
+          point_discount: 0,
+          gmo_point_discount: 0,
+          other_discount: 0,
+          other_discount_name: '',
+          total_price: 1930,
+          granted_points: 100,
+          use_points: 0,
+          granted_gmo_points: 0,
+          use_gmo_points: 0,
+          granted_yahoo_points: 0,
+          use_yahoo_points: 0,
+          external_order_id: 'ABC0123456789',
+          customer: {
+            id: 998273,
+            account_id: 'PA01234567',
+            name: 'カラーミー太郎',
+            furigana: 'カラーミータロウ',
+            hojin: 'GMOペパボ株式会社',
+            busho: 'EC事業部',
+            sex: 'male',
+            birthday: '1999-01-01',
+            postal: '1578512',
+            pref_id: 13,
+            pref_name: '東京都',
+            address1: '渋谷区桜丘町26-1',
+            address2: 'セルリアンタワー',
+            mail: 'example@pepabo.com',
+            tel: null,
+            fax: null,
+            tel_mobile: '080-1234-1234',
+            other: null,
+            points: 216,
+            member: true,
+            sales_count: 3,
+            receive_mail_magazine: true,
+            answer_free_form1: 'これはフリー項目1の入力内容です',
+            answer_free_form2: 'これはフリー項目2の入力内容です',
+            answer_free_form3: 'これはフリー項目3の入力内容です',
+            make_date: 1465784944,
+            update_date: 1494496809,
+            membership: {
+              membership_id: 'gold_member',
+              name: 'ゴールド会員',
+              progress: {
+                score: 3000,
+                aggregation_period: {
+                  start_date: 1780239600,
+                  end_date: 1782831599,
+                },
+                next_membership: {
+                  membership_id: 'platinum',
+                  name: 'プラチナ会員',
+                  required_score: 4000,
+                  remaining_score: 1000,
+                },
+              },
+            },
+            external_accounts: [
+              {
+                provider: 0,
+                uid: '6cfd46d2fd18eb15d01ce0a00d4b0349',
+                created_at: 1465784934,
+              },
+            ],
+          },
+          details: [
+            {
+              id: 44344599,
+              sale_id: 4434233,
+              account_id: 'PA01234567',
+              product_id: 1342332,
+              sale_delivery_id: 1173289,
+              option1_value: '赤',
+              option2_value: 'Sサイズ',
+              option1_index: 0,
+              option2_index: 0,
+              product_model_number: 'T-RED-S-223',
+              product_name: 'Tシャツ',
+              pristine_product_full_name: 'Tシャツ（カラー：赤、サイズ：Sサイズ）',
+              product_cost: 1000,
+              product_image_url: 'https://img07.shop-pro.jp/XXX/XX/product/123.jpg?20130319164314',
+              product_thumbnail_image_url: 'https://img07.shop-pro.jp/XXX/XX/product/123_th.jpg?20130319164314',
+              product_mobile_image_url: 'https://img07.shop-pro.jp/XXX/XX/product/123_mb.jpg?20130319164314',
+              price: 1680,
+              price_with_tax: 1814,
+              product_num: 1,
+              unit: '枚',
+              subtotal_price: 1814,
+              tax_reduced: false,
+              customizations: [
+                {
+                  title: '名入れ',
+                  value: 'オリジナル名',
+                },
+              ],
+            },
+          ],
+          sale_deliveries: [
+            {
+              id: 1173289,
+              account_id: 'PA01234567',
+              sale_id: 4434233,
+              delivery_id: 113922,
+              detail_ids: [
+                44344599,
+              ],
+              name: 'ペパボ太郎',
+              furigana: 'ペパボタロウ',
+              postal: '1508512',
+              pref_id: 13,
+              pref_name: '東京都',
+              address1: '渋谷区桜丘町26-1',
+              address2: 'セルリアンタワー',
+              tel: null,
+              preferred_date: '2017-05-21',
+              preferred_period: '午前中',
+              slip_number: '1234-5678-9012',
+              noshi_text: '寿',
+              noshi_charge: 100,
+              card_name: 'バースデーカード',
+              card_text: 'おめでとう',
+              card_charge: 150,
+              wrapping_name: 'ギフト用ラッピング（ピンク）',
+              wrapping_charge: 200,
+              delivery_charge: 350,
+              total_charge: 800,
+              tracking_url: 'https://example.com/delivery_state?id=111-222-33333',
+              memo: null,
+              delivered: false,
+            },
+          ],
+          segment: {
+            id: 1,
+            name: 'string',
+            parent_sale_id: 4434233,
+            splitted: true,
+            product_total_price: 2000,
+            delivery_total_charge: 700,
+            total_price: 2700,
+            noshi_total_charge: 0,
+            card_total_charge: 200,
+            wrapping_total_charge: 0,
+            siblings_sale_ids: [
+              4434233,
+              4434234,
+            ],
+          },
+          totals: {
+            normal_tax_amount: 90,
+            reduced_tax_amount: 13,
+            discount_amount_for_normal_tax: 171,
+            discount_amount_for_reduced_tax: 29,
+            total_price_with_normal_tax: 989,
+            total_price_with_reduced_tax: 171,
+          },
+          application: {
+            name: 'サンプルアプリ',
+          },
+          shop_coupon: {
+            id: 123,
+            name: '新規会員限定クーポン',
+            code: 'WELCOME10',
+          },
+        },
+      },
+    )
+
+    const client = new ColormeApiClient(mockClient)
+
+    const { response } = await client.getSaleV1()({
+      params: {
+        path: {
+          sale_id: 4434233,
+        },
+      },
+    })
+    assert(response.ok)
+
+    const json = await response.json()
+    assert(json.sale !== undefined)
+
+    expect(json.sale.id).toBe(4434233)
+  })
+
+  test('not ok', async () => {
+    const mockAgent = new MockAgent({ connections: 1 })
+    const mockClient = mockAgent.get(BASE_URL)
+
+    mockClient.intercept({ path: '/v1/sales/4434233', method: 'GET' }).reply(500)
+
+    const client = new ColormeApiClient(mockClient)
+
+    const { response } = await client.getSaleV1()({
+      params: {
+        path: {
+          sale_id: 4434233,
+        },
+      },
+    })
+    assert(response.ok === false)
+  })
+})
+
 describe('getProductsV1', () => {
   test('ok', async () => {
     const mockAgent = new MockAgent({ connections: 1 })
@@ -448,6 +912,63 @@ describe('getProductsV1', () => {
     const client = new ColormeApiClient(mockClient)
 
     const { response } = await client.getProductsV1()({})
+    assert(response.ok === false)
+  })
+})
+
+describe('getCouponsV1', () => {
+  test('ok', async () => {
+    const mockAgent = new MockAgent({ connections: 1 })
+    const mockClient = mockAgent.get(BASE_URL)
+
+    mockClient.intercept({ path: '/v1/shop_coupons', method: 'GET' }).reply(200,
+      {
+        shop_coupons: [
+          {
+            id: 187239,
+            name: '100円割引',
+            code: 'discount100',
+            coupon_type: 'amount',
+            discount_amount: 50,
+            minimum_amount: 1000,
+            starts_at: 1465784934,
+            ends_at: 1465784934,
+            total_usage_limit: 10,
+            usage_limit: 'indisposable',
+            group_limit_type: 'none',
+            status: 'unavailable',
+            created_at: 1465784934,
+            updated_at: 1465784934,
+            group_ids: [
+              1,
+              2,
+              3,
+            ],
+          },
+        ],
+      },
+    )
+
+    const client = new ColormeApiClient(mockClient)
+
+    const { response } = await client.getCouponsV1()({})
+    assert(response.ok)
+
+    const json = await response.json()
+    assert(json.shop_coupons !== undefined)
+
+    expect(json.shop_coupons[0].id).toBe(187239)
+  })
+
+  test('not ok', async () => {
+    const mockAgent = new MockAgent({ connections: 1 })
+    const mockClient = mockAgent.get(BASE_URL)
+
+    mockClient.intercept({ path: '/v1/shop_coupons', method: 'GET' }).reply(500)
+
+    const client = new ColormeApiClient(mockClient)
+
+    const { response } = await client.getCouponsV1()({})
     assert(response.ok === false)
   })
 })
