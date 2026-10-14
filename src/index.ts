@@ -241,11 +241,120 @@ export class ColormeApiClient {
   }
 
   /**
+   * 受注データのリストを取得
+   * @link https://developer.shop-pro.jp/docs/colorme-api#tag/sale/operation/getSales
+   */
+  getSalesV1() {
+    const path: ShopApiPath = '/v1/sales'
+    const method: ShopApiMethod<typeof path> = 'GET'
+    type Response200Json = PathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
+
+    return async ({ accessToken }: { accessToken?: string }) => {
+      const response = await this.client.request({
+        path,
+        method,
+        headers: {
+          ...this.getAuthorizationHeader({ accessToken }),
+        },
+      })
+
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
+    }
+  }
+
+  /**
+   * 受注データの取得
+   * @link https://developer.shop-pro.jp/docs/colorme-api#tag/sale/operation/getSale
+   */
+  getSaleV1() {
+    const path: ShopApiPath = '/v1/sales/{sale_id}'
+    const method: ShopApiMethod<typeof path> = 'GET'
+    type Path = PathsShopApi[typeof path][Lowercase<typeof method>]['parameters']['path']
+    type Response200Json = PathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
+
+    type Parameters = {
+      path: Path
+    }
+    return async ({ accessToken, params }: { accessToken?: string, params: Parameters }) => {
+      const response = await this.client.request({
+        path: path.replace('{sale_id}', String(params.path.sale_id)),
+        method,
+        headers: {
+          ...this.getAuthorizationHeader({ accessToken }),
+        },
+      })
+
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
+    }
+  }
+
+  /**
    * 商品一覧の取得
    * @link https://developer.shop-pro.jp/docs/colorme-api#tag/product/operation/getProducts
    */
   getProductsV1() {
     const path: ShopApiPath = '/v1/products'
+    const method: ShopApiMethod<typeof path> = 'GET'
+    type Response200Json = PathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
+
+    return async ({ accessToken }: { accessToken?: string }) => {
+      const response = await this.client.request({
+        path,
+        method,
+        headers: {
+          ...this.getAuthorizationHeader({ accessToken }),
+        },
+      })
+
+      return response.statusCode === 200
+        ? {
+            response: {
+              rawResponse: response,
+              ok: true as const,
+              json: () => response.body.json() as Promise<Response200Json>,
+            },
+          }
+        : {
+            response: {
+              rawResponse: response,
+              ok: false as const,
+            },
+          }
+    }
+  }
+
+  /**
+   * ショップクーポンの一覧を取得
+   * @link https://developer.shop-pro.jp/docs/colorme-api#tag/shop_coupon/operation/getCoupons
+   */
+  getCouponsV1() {
+    const path: ShopApiPath = '/v1/shop_coupons'
     const method: ShopApiMethod<typeof path> = 'GET'
     type Response200Json = PathsShopApi[typeof path][Lowercase<typeof method>]['responses']['200']['content']['application/json']
 
