@@ -1,17 +1,23 @@
 {
   "words": [
     "appstore",
+    "busho",
     "cmsp",
     "colorme",
     "dbaeumer",
     "dotenv",
     "eslintcache",
+    "expl",
+    "furigana",
     "hojin",
     "ihori",
+    "indisposable",
     "jscoverage",
     "jspm",
+    "noshi",
     "nuxt",
     "pids",
+    "soldout",
     "stylelintcache",
     "sveltekit",
     "testshop",
@@ -21,6 +27,7 @@
     "wscript",
   ],
   "ignoreWords": [
+    "conent",
     "paxxxxxxxx",
   ]
 }
